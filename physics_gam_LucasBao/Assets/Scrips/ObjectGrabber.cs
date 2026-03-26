@@ -15,6 +15,8 @@ public class ObjectGrabber : MonoBehaviour
 
     private Rigidbody heldObject;
     private bool isHolding = false;
+
+    private InteractableObject currentHightlight;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void FixedUpdate()
     {
