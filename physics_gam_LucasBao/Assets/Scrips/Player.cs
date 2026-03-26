@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-public class FPSPlayer : MonoBehaviour
+public class Player : MonoBehaviour
 {
     [Header("Movement")]
     public float walkSpeed = 5;
