@@ -32,6 +32,11 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     public Transform groundCheck;
 
+    [Header("Grenade")]
+    public GameObject grenadePrefab; // 手雷预制体
+    public Transform grenadeSpawnPoint; // 手雷生成位置
+    public float throwForce = 10f;
+
     
     // Start is called before the first frame update
     void Start()
@@ -129,6 +134,21 @@ public class Player : MonoBehaviour
     public void OnSprint(InputAction.CallbackContext context)
     {
         isRunning = context.ReadValueAsButton();
+    }
+
+    public void OnThrowGrenade(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        if (grenadePrefab != null && grenadeSpawnPoint != null)
+        {
+            GameObject grenade = Instantiate(grenadePrefab, grenadeSpawnPoint.position, grenadeSpawnPoint.rotation);
+            Rigidbody rb = grenade.GetComponent<Rigidbody>();
+            if (rb != null)
+            {
+                rb.AddForce(grenadeSpawnPoint.forward * throwForce, ForceMode.VelocityChange);
+            }
+        }
     }
 
     private void CheckGround()
