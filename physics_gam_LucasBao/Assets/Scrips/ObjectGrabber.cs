@@ -62,7 +62,7 @@ public class ObjectGrabber : MonoBehaviour
                 heldObject = hit.collider.GetComponent<Rigidbody>();
                 
                 //added this later
-                PhysicsObject physObj = heldObject.GetComponent<PhysicsObject>();
+                PhysicsObjects physObj = heldObject.GetComponent<PhysicsObjects>();
                 if (physObj != null) physObj.isHeld = true;
                 
                 
@@ -111,7 +111,7 @@ public class ObjectGrabber : MonoBehaviour
         if (heldObject == null) return;
         
         //mark no longer as held
-        PhysicsObject physObj = heldObject.GetComponent<PhysicsObject>();
+        PhysicsObjects physObj = heldObject.GetComponent<PhysicsObjects>();
         if (physObj != null) physObj.isHeld = false;
         
         //re-enable gravity and rotation
@@ -137,7 +137,7 @@ public class ObjectGrabber : MonoBehaviour
         
         
         //mark no longer as held
-        PhysicsObject physObj = heldObject.GetComponent<PhysicsObject>();
+        PhysicsObjects physObj = heldObject.GetComponent<PhysicsObjects>();
         if (physObj != null) physObj.isHeld = false;
 
         //re-enable physics first

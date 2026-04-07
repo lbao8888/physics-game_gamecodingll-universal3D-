@@ -38,7 +38,7 @@ public class PressurePlate : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(plate !=null)
+        if (plate != null)
         {
             //storing where our plate is
             plateResetPos = plate.localPosition;
@@ -51,18 +51,20 @@ public class PressurePlate : MonoBehaviour
     //we check for physics obj to get the weight
     private void OnTriggerEnter(Collider other)
     {
-       PhysicsObjects physOb = other.GetComponent<PhysicsObjects>();
-       if (physOb == null) return;
+        Debug.Log("isActivated" + isActivated);
+        Debug.Log(currentWeight);
+        PhysicsObjects physOb = other.GetComponent<PhysicsObjects>();
+        if (physOb == null) return;
 
-       if (physOb.isHeld) return; //so it doesnt go off when youre just holding it in the trigger area
+        if (physOb.isHeld) return; //so it doesnt go off when youre just holding it in the trigger area
 
         //first simple version
         /*currentWeight += physOb.puzzleWeight;
         Debug.Log($"{other.gameObject.name} entered plate. total weight: {currentWeight}");
         CheckActivation();*/
 
-       //this is instead adding it to a list at first just to make sure nothing gets double activated
-       //the above works too
+        //this is instead adding it to a list at first just to make sure nothing gets double activated
+        //the above works too
         if (objectsOnPlate.Add(physOb))
         {
             currentWeight += physOb.puzzleWeight;
@@ -77,9 +79,10 @@ public class PressurePlate : MonoBehaviour
         if (physicsObj == null) return;
 
         //ifnore if still being held
-        if(physicsObj.isHeld) return;
+        if (physicsObj.isHeld) return;
+        
 
-        if(objectsOnPlate.Add(physicsObj))
+        if (objectsOnPlate.Add(physicsObj))
         {
             currentWeight += physicsObj.puzzleWeight;
             CheckActivation();
@@ -88,7 +91,7 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(isLocked) return;
+        if (isLocked) return;
         PhysicsObjects physicsObj = other.GetComponent<PhysicsObjects>();
         if (physicsObj == null) return;
 
@@ -104,16 +107,16 @@ public class PressurePlate : MonoBehaviour
     //called whenever weight changes, activates if threshold is met
     void CheckActivation()
     {
-        if(!isActivated && currentWeight >= weightThreshold)
+        if (!isActivated && currentWeight >= weightThreshold)
         {
             isActivated = true;
-            if(lockOnActivate) isLocked = true;
+            if (lockOnActivate) isLocked = true;
 
             //calls it for whatever is listening to it
             onActivated.Invoke();
             Debug.Log("Pressure plate is activated");
 
-            if(plate != null)
+            if (plate != null)
             {
                 //after its activated move the plate
                 plate.localPosition = platePressedPos;
@@ -124,13 +127,13 @@ public class PressurePlate : MonoBehaviour
     //call this when weight is removed deactivates if below threshold
     void CheckDeactivation()
     {
-        if(isActivated && !isLocked && currentWeight < weightThreshold)
+        if (isActivated && !isLocked && currentWeight < weightThreshold)
         {
             isActivated = false;
             onDeactivated.Invoke();
             Debug.Log("pressure plate is deactivated");
 
-            if(plate != null)
+            if (plate != null)
             {
                 plate.localPosition = plateResetPos;
             }
