@@ -31,7 +31,7 @@ public class PhysicsObjects : MonoBehaviour
     PhysicsMaterial physMat;
     public bool isHeld = false;
 
-    
+
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -63,7 +63,7 @@ public class PhysicsObjects : MonoBehaviour
 
         //assign the material to the collider
         Collider col = GetComponent<Collider>();
-        if(col != null)
+        if (col != null)
         {
             col.material = physMat;
         }
@@ -75,6 +75,13 @@ public class PhysicsObjects : MonoBehaviour
     private void OnValidate()
     {
         //on validate runs in the editor whenever an inspector value changes
-        if(rb != null) ApplyRigidbodySettings();
+        if (rb != null) ApplyRigidbodySettings();
+    }
+
+    public float GetWeight()
+    {
+        if (puzzleWeight >= 0f) return puzzleWeight;
+
+        return mass;
     }
 }
